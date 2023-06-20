@@ -1,10 +1,11 @@
 <template>
   <n-config-provider :theme="dark" :locale="i18n.main" :date-locale="i18n.date" :theme-overrides="theme">
-    <n-watermark v-if="mask" :content="mask" cross fullscreen
-    :font-size="16" :line-height="16" :width="300" :height="250" :x-offset="5" :y-offset="60" :rotate="-15"/>
+    <n-watermark v-if="mask" :content="mask" cross fullscreen :font-size="16" :line-height="16" :width="300" :height="250"
+      :x-offset="5" :y-offset="60" :rotate="-15" />
     <n-dialog-provider>
       <n-message-provider>
         <global-api />
+        <n-back-top :right="10" />
       </n-message-provider>
     </n-dialog-provider>
     <router-view />
@@ -34,7 +35,7 @@ export default {
       let path = window.location.pathname;
       let token = localStorage.getItem('user:access:token')
       if (token == '' || token == undefined) this.$router.push('/auth')
-      else if(path == '/' || path == '/app' || path == '/app/') this.$router.push('/home')
+      else if (path == '/' || path == '/app' || path == '/app/') this.$router.push('/home')
     },
     initConfig() {
       init().then(res => {

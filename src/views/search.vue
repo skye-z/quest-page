@@ -12,7 +12,7 @@
             <div v-else>
                 <div class="card mb-10">
                     <n-input-group>
-                        <n-input v-model:value="keyword" @keyup.enter="getQuestionNumber" type="text" placeholder="请输入关键词, 支持模糊查询题干与选项">
+                        <n-input v-model:value="keyword" @keyup.enter="getQuestionNumber" clearable type="text" placeholder="请输入关键词, 支持模糊查询题干与选项">
                             <template #prefix>
                                 <n-icon>
                                     <Search24Regular />
@@ -110,7 +110,7 @@
                     </n-result>
                     </div>
                 </div>
-                <n-pagination v-if="number > 0" class="justify-center" v-model:page="page" :item-count="number" />
+                <n-pagination v-if="number > 0" class="justify-center" :page-sizes="[20]" v-model:page="page" :item-count="number" @update:page="getQuestionList" />
             </div>
         </div>
         <foot-bar :app="app" />
@@ -199,6 +199,7 @@ export default {
             })
         },
         getQuestionList() {
+            console.log(this.page)
             question.getList(this.subject, this.keyword, this.page, 20).then(res => {
                 for (let i in res.list) {
                     let item = res.list[i]

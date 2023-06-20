@@ -126,7 +126,7 @@
                             type="textarea" label-field="" placeholder="请在此处输入答案" />
                     </template>
                 </div>
-                <n-pagination v-if="number > 0" class="justify-center" v-model:page="page" :item-count="number" />
+                <n-pagination v-if="number > 0" class="justify-center" :page-sizes="[20]" v-model:page="page" :item-count="number" @update:page="getQuestionList" />
             </div>
         </div>
         <foot-bar :app="app" />
@@ -312,7 +312,7 @@ export default {
 }
 
 .app-body {
-    max-width: 500px;
+    max-width: 600px;
 }
 </style>
   
