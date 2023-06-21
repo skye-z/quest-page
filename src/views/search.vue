@@ -12,7 +12,8 @@
             <div v-else>
                 <div class="card mb-10">
                     <n-input-group>
-                        <n-input v-model:value="keyword" @keyup.enter="getQuestionNumber" clearable type="text" placeholder="请输入关键词, 支持模糊查询题干与选项">
+                        <n-input v-model:value="keyword" @keyup.enter="getQuestionNumber" clearable type="text"
+                            placeholder="请输入关键词, 支持模糊查询题干与选项">
                             <template #prefix>
                                 <n-icon>
                                     <Search24Regular />
@@ -103,14 +104,18 @@
                         </n-table>
                     </n-scrollbar>
                     <div v-else class="tips">
-                    <n-result status="500" title="没找到" description="没有找到符合的试题啊">
-                        <template #footer>
-                            <n-button @click="getQuestionNumber">重新获取</n-button>
-                        </template>
-                    </n-result>
+                        <n-result status="500" title="没找到" description="没有找到符合的试题啊">
+                            <template #footer>
+                                <n-button @click="getQuestionNumber">重新获取</n-button>
+                            </template>
+                        </n-result>
                     </div>
                 </div>
-                <n-pagination v-if="number > 0" class="justify-center" :page-sizes="[20]" v-model:page="page" :item-count="number" @update:page="getQuestionList" />
+                <div class="flex justify-between" v-if="number > 0">
+                    <n-pagination class="justify-center" :page-sizes="[20]" v-model:page="page" :item-count="number"
+                        @update:page="getQuestionList" />
+                    <div>共 {{ number }} 题</div>
+                </div>
             </div>
         </div>
         <foot-bar :app="app" />
@@ -185,6 +190,7 @@ export default {
             this.getQuestionNumber();
         },
         getQuestionNumber() {
+            this.$refs.loading.show()
             question.getNumber(this.subject, this.keyword).then(res => {
                 this.number = res.num
                 this.checkState = {}
@@ -193,13 +199,17 @@ export default {
                 if (res.num > 0) {
                     this.page = 1
                     this.getQuestionList()
-                } else window.$message.warning('未找到可用试题')
+                } else {
+                    window.$message.warning('未找到可用试题')
+                    this.$refs.loading.hide()
+                }
             }).catch(() => {
-
+                this.$refs.loading.hide()
             })
         },
         getQuestionList() {
-            console.log(this.page)
+            this.$refs.loading.show()
+            this.questions = []
             question.getList(this.subject, this.keyword, this.page, 20).then(res => {
                 for (let i in res.list) {
                     let item = res.list[i]
@@ -218,8 +228,9 @@ export default {
                     }
                 }
                 this.questions = res.list
+                setTimeout(()=>this.$refs.loading.hide(),300)
             }).catch(() => {
-
+                this.$refs.loading.hide()
             })
         },
     },

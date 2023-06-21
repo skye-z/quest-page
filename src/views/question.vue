@@ -126,7 +126,11 @@
                             type="textarea" label-field="" placeholder="请在此处输入答案" />
                     </template>
                 </div>
-                <n-pagination v-if="number > 0" class="justify-center" :page-sizes="[20]" v-model:page="page" :item-count="number" @update:page="getQuestionList" />
+                <div class="flex justify-between" v-if="number > 0">
+                    <n-pagination class="justify-center" :page-sizes="[20]" v-model:page="page" :item-count="number"
+                        @update:page="getQuestionList" />
+                    <div>共 {{ number }} 题</div>
+                </div>
             </div>
         </div>
         <foot-bar :app="app" />
@@ -201,6 +205,7 @@ export default {
             this.getQuestionNumber();
         },
         getQuestionNumber() {
+            this.$refs.loading.show()
             question.getNumber(this.subject, null).then(res => {
                 this.number = res.num
                 this.checkState = {}
@@ -209,12 +214,17 @@ export default {
                 if (res.num > 0) {
                     this.page = 1
                     this.getQuestionList()
-                } else window.$message.warning('未找到可用试题')
+                } else {
+                    window.$message.warning('未找到可用试题')
+                    this.$refs.loading.hide()
+                }
             }).catch(() => {
-
+                this.$refs.loading.hide()
             })
         },
         getQuestionList() {
+            this.$refs.loading.show()
+            this.questions = []
             question.getList(this.subject, null, this.page, 20).then(res => {
                 for (let i in res.list) {
                     let item = res.list[i]
@@ -233,8 +243,9 @@ export default {
                     }
                 }
                 this.questions = res.list
+                this.$refs.loading.hide()
             }).catch(() => {
-
+                this.$refs.loading.hide()
             })
         },
         check(item, value) {
