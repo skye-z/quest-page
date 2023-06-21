@@ -298,7 +298,6 @@ export default {
                     window.$message.success('题目添加成功')
                     this.form.show = false
                     this.$emit("update", 'add')
-                    // this.getNumber()
                 } else window.$message.warning(res.message ? res.message : '题目添加失败')
             }).catch(() => {
                 this.form.loading = false
@@ -311,7 +310,6 @@ export default {
                     window.$message.success('题目编辑成功')
                     this.form.show = false
                     this.$emit("update", 'edit')
-                    // this.getList()
                 } else window.$message.warning(res.message ? res.message : '题目编辑失败')
             }).catch(() => {
                 this.form.loading = false

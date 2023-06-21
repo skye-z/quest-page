@@ -47,7 +47,7 @@
                         </n-button>
                     </div>
                 </n-scrollbar>
-                <n-pagination v-if="number > 0" class="justify-center pa-5" :page-slot="7" v-model:page="page" :item-count="number" @update:page="getList" />
+                <n-pagination v-if="number > 0" class="justify-center pa-5 border-top" :page-slot="7" v-model:page="page" :item-count="number" @update:page="getList" />
             </n-spin>
         </div>
         <question-search ref="search" :subjects="subjects" :type="type" @update="submitSearch" />
