@@ -2,13 +2,6 @@
     <div>
         <div class="card mb-10">
             <div class="flex align-center float-right mt-5 mr-5">
-                <n-button size="small" strong secondary circle class="mr-5">
-                    <template #icon>
-                        <n-icon>
-                            <SearchRound />
-                        </n-icon>
-                    </template>
-                </n-button>
                 <n-button @click="add" size="small" type="primary" round>
                     <template #icon>
                         <n-icon>
