@@ -143,6 +143,7 @@ export default {
                 loading: false,
                 ...item
             }
+            this.getQuestionNumber()
         },
         getQuestionNumber() {
             this.page = 0

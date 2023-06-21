@@ -10,7 +10,27 @@
                     添加
                 </n-button>
             <div class="card-name">考试</div>
-            <div class="exam-list"></div>
+            <n-spin :show="loading">
+                <n-scrollbar style="height: 300px">
+                    <div class="exam-item flex align-center justify-between" v-for="item in list"
+                        @click="openForm(item)">
+                        <div>
+                            <div class="line1">{{ item.name }}</div>
+                            <n-text depth="3">
+                                <n-ellipsis style="max-width: 190px">共{{ item.questions.length }}题</n-ellipsis>
+                            </n-text>
+                        </div>
+                        <n-button @click.stop="remove(item.id)" strong secondary circle type="error">
+                            <template #icon>
+                                <n-icon>
+                                    <DeleteForeverRound />
+                                </n-icon>
+                            </template>
+                        </n-button>
+                    </div>
+                </n-scrollbar>
+                <n-pagination v-if="number > 0" class="justify-center pa-5 border-top" :page-slot="7" v-model:page="page" :item-count="number" @update:page="getList" />
+            </n-spin>
         </div>
         <exam-form ref="form" :subjects="subjects" :type="type" @update="update" />
     </div>
@@ -31,10 +51,6 @@ export default {
     data: () => ({
         loading: true,
         list: [],
-        form: {
-            show: false,
-            loading: false,
-        },
         type: [
             {
                 label: "单选题",
@@ -73,14 +89,48 @@ export default {
     methods: {
         getList() {
             this.loading = true
+            exam.getList().then(res => {
+                if (res.list) {
+                    for(let i in res.list){
+                        res.list[i].questions = JSON.parse(res.list[i].questions)
+                    }
+                    setTimeout(() => {
+                        this.list = res.list
+                        this.loading = false
+                    }, 500)
+                } else {
+                    window.$message.warning(res.message ? res.message : '发生意料之外的错误')
+                    this.loading = false
+                }
+            }).catch(() => {
+                this.loading = false
+            })
         },
         openForm(item) {
             if (item) this.$refs.form.edit(item)
             else this.$refs.form.add()
         },
         update(){
-            
-        }
+            this.getList()
+        },
+        remove(id) {
+            window.$dialog.warning({
+                title: '操作确认',
+                content: '确认要删除此考试?',
+                positiveText: '确认',
+                negativeText: '取消',
+                onPositiveClick: () => {
+                    exam.remove(id).then(res => {
+                        if (res.state) {
+                            window.$message.success('删除成功')
+                            this.getList()
+                        } else window.$message.warning(res.message ? res.message : '删除失败')
+                    }).catch(() => {
+                        this.form.loading = false
+                    })
+                }
+            })
+        },
     },
     mounted() {
         setTimeout(() => {
@@ -90,7 +140,13 @@ export default {
 };
 </script>
 <style scoped>
-.exam-list {
-    height: 300px;
+.exam-item {
+    border-top: #556276 1px solid;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.exam-item:hover {
+    background-color: #45546a;
 }
 </style>
