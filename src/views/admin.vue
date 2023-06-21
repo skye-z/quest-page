@@ -11,7 +11,7 @@
                 </div>
                 <div class="admin-right full-width">
                     <question-manage :subjects="subjects" />
-                    <exam-manage />
+                    <exam-manage :subjects="subjects" />
                 </div>
             </div>
         </div>
