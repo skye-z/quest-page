@@ -13,7 +13,7 @@
             </div>
             <div class="card-name">用户 <span class="text-gray">{{ list.length }}</span></div>
             <n-spin :show="loading">
-                <n-scrollbar style="height: 300px">
+                <n-scrollbar style="height: 340px">
                     <div class="user-item flex align-center justify-between" v-for="item in list" @click="edit(item)">
                         <div>
                             <div class="line1">
