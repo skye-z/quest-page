@@ -147,14 +147,14 @@ export const exam = {
             method: 'GET'
         })
     },
-    add: (sid, questions, answers) => {
+    add: (name, sid, questions) => {
         return post('/exam/add', {
-            sid, questions, answers
+            name, sid, questions
         })
     },
-    edit: (id, sid, questions, answers) => {
+    edit: (id, name, sid, questions) => {
         return post('/exam/' + id, {
-            sid, questions, answers
+            name, sid, questions
         })
     },
     remove: (id) => {
