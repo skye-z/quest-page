@@ -9,6 +9,7 @@ const Admin = () => import('../views/admin.vue')
 const Search = () => import('../views/search.vue')
 const Question = () => import('../views/question.vue')
 const Exam = () => import('../views/exam.vue')
+const ExamContent = () => import('../views/examContent.vue')
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.VITE_APP_PATH),
@@ -64,6 +65,15 @@ const router = createRouter({
             component: Exam,
             meta: {
                 title: "考试",
+                auth: true
+            }
+        },
+        {
+            name: 'ExamContent',
+            path: '/exam/:id',
+            component: ExamContent,
+            meta: {
+                title: "模拟考试",
                 auth: true
             }
         },
