@@ -141,9 +141,11 @@ export const question = {
 }
 
 export const exam = {
-    getList: () => {
+    getList: (sid) => {
+        let url = '/exam/list'
+        if (sid) url += '?sid=' + sid
         return request({
-            url: '/exam/list',
+            url,
             method: 'GET'
         })
     },
