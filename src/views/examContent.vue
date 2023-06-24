@@ -215,6 +215,7 @@ export default {
     state: {},
     flex: true,
     stop: false,
+    timer: 0,
   }),
   methods: {
     initEvent() {
@@ -229,11 +230,17 @@ export default {
     },
     initExam(id) {
       let cache = localStorage.getItem("app:exam:" + id);
+      console.log(cache);
       if (cache != undefined) {
         this.id = id;
         this.state = {};
         cache = JSON.parse(cache);
         if (cache.answer == undefined) cache.answer = {};
+        else {
+          for (let i in cache.answer) {
+            this.updateState(i);
+          }
+        }
         for (let i in cache.questions) {
           let item = cache.questions[i];
           if (item.options.indexOf("[") != -1) item.options = JSON.parse(item.options);
@@ -254,8 +261,15 @@ export default {
         document.title = this.info.name + " - " + this.app.name;
       }
     },
-    updateState(index) {
-      this.state[index] = 1;
+    updateState(id) {
+      this.state[id] = 1;
+      this.autoSave();
+    },
+    autoSave() {
+      if (this.timer) clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        localStorage.setItem("app:exam:" + this.id, JSON.stringify(this.info));
+      }, 1000);
     },
     exitExam() {
       window.$dialog.warning({
