@@ -91,7 +91,7 @@ export default {
           positiveText: "开始考试",
           negativeText: "取消",
           onPositiveClick: () => {
-            item.answer = [];
+            item.answer = {};
             item.start = new Date().getTime();
             localStorage.setItem("app:exam:" + item.id, JSON.stringify(item));
             window.$message.success("考试开始,考试结果将存储于本机");
@@ -109,7 +109,7 @@ export default {
             this.$router.push("/exam/" + item.id);
           },
           onNegativeClick: () => {
-            item.answer = [];
+            item.answer = {};
             item.start = new Date().getTime();
             localStorage.setItem("app:exam:" + item.id, JSON.stringify(item));
             window.$message.success("考试开始,考试结果将存储于本机");
@@ -144,9 +144,9 @@ export default {
   transition: all 0.3s ease-in;
   border-radius: 12px;
   margin-right: 10px;
-  padding: 20px 10px;
   max-width: 230px;
   cursor: pointer;
+  padding: 10px;
   width: 100%;
 }
 
