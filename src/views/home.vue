@@ -24,7 +24,7 @@
                         <BookClock24Regular />
                     </n-icon>
                     <div class="menu-name">考试</div>
-                    <div class="menu-tips">使用题库生成模拟考试</div>
+                    <div class="menu-tips">使用题库进行模拟考试</div>
                 </div>
                 <div v-if="user.admin" @click="jump('admin')" class="menu-item text-center">
                     <n-icon size="80">
