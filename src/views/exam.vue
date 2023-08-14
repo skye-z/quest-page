@@ -9,6 +9,13 @@
         </n-icon>
         <div>请先在左上方选择科目</div>
       </div>
+      <div class="tips text-center" v-else-if="exams.length == 0">
+        <n-result status="404" title="空空如也" description="这个科目下面似乎没有试卷呀">
+          <template #footer>
+            <n-button @click="getExamList">重新获取</n-button>
+          </template>
+        </n-result>
+      </div>
       <div v-else class="exam-list">
         <div v-for="item in exams" class="exam-item" @click="startExam(item)">
           <div class="line1">{{ item.name }}</div>
