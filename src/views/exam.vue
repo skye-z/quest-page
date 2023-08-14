@@ -47,8 +47,7 @@ export default {
   components: { Loading, HeadBar, FootBar, Warning24Filled },
   data: () => ({
     app: {
-      name: "Quest云题库",
-      version: "1.0.0",
+      name: "Quest云题库"
     },
     user: {},
     exams: [],

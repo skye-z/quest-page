@@ -56,8 +56,7 @@ export default {
     app: {
       type: Object,
       default: {
-        name: "Quest云题库",
-        version: "1.0.0",
+        name: "Quest云题库"
       },
     },
     user: {

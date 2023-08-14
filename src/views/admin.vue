@@ -35,8 +35,7 @@ export default {
     components: { Loading, HeadBar, FootBar, SystemManage, SubjectManage, UserManage, QuestionManage, ExamManage },
     data: () => ({
         app: {
-            name: 'Quest云题库',
-            version: '1.0.0'
+            name: 'Quest云题库'
         },
         user: {},
         subjects: []

@@ -51,8 +51,7 @@ export default {
     components: { Loading, HeadBar, FootBar, Settings24Regular, Search24Regular, BookOpen24Regular, BookClock24Regular },
     data: () => ({
         app: {
-            name: 'Quest云题库',
-            version: '1.0.0'
+            name: 'Quest云题库'
         },
         user: {}
     }),
