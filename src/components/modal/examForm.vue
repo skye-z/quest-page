@@ -75,6 +75,7 @@
         <n-pagination
           v-if="number > 0"
           class="justify-center mt-10"
+          :page-sizes="[20]"
           :page-slot="7"
           v-model:page="page"
           :item-count="number"
@@ -246,7 +247,7 @@ export default {
     },
     getQuestionList() {
       question
-        .getList(this.form.sid, null, this.page, 10)
+        .getList(this.form.sid, null, this.page, 20)
         .then((res) => {
           if (res.list) {
             this.list = res.list;

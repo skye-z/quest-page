@@ -229,7 +229,6 @@ export default {
     },
     initExam(id) {
       let cache = localStorage.getItem("app:exam:" + id);
-      console.log(cache);
       if (cache != undefined) {
         this.id = id;
         this.state = {};
@@ -313,8 +312,6 @@ export default {
       for (let i in this.info.questions) {
         let item = this.info.questions[i];
         if (answer[item.id] == undefined) continue;
-
-        console.log(item.answer, answer[item.id]);
 
         if (item.type == 1 || item.type == 3) {
           this.state[item.id] = item.answer == answer[item.id] ? 2 : 3;
